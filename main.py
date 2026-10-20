@@ -2,6 +2,7 @@ import flet as ft
 from alert import AlertManager
 from deposito_strumenti import DepositoStrumenti
 
+
 FILE_STRUMENTI = "strumenti.csv"
 
 def main(page: ft.Page):
@@ -36,7 +37,23 @@ def main(page: ft.Page):
     lista_strumenti = ft.ListView(expand=True, spacing=5, padding=10, auto_scroll=True)
 
     # Tutti i TextField per le info necessarie per aggiungere un nuovo strumento (tipo, marca, anno, contatore posti)
-    # TODO
+    def diminuisci(e):
+        if int(counter.value) > 0:
+            counter.value = str(int(counter.value) - 1)
+            page.update()
+
+    def aggiungi(e):
+        counter.value = str(int(counter.value) + 1)
+        page.update()
+
+
+    tipo = ft.TextField("Tipo")
+    marca = ft.TextField("Marca" )
+    anno = ft.TextField("Anno Acquisto")
+    counter =  ft.Text(value="0")
+    riga = ft.Row([tipo, marca, anno,ft.IconButton(ft.Icons.REMOVE, on_click=diminuisci),counter,ft.IconButton(ft.Icons.ADD,on_click=aggiungi)], alignment=ft.MainAxisAlignment.CENTER)
+    page.controls.append(riga)
+    page.update()
 
     # --- FUNZIONI APP ---
     def aggiorna_lista_strumenti():
@@ -65,7 +82,7 @@ def main(page: ft.Page):
     pulsante_conferma_responsabile = ft.ElevatedButton("Conferma", on_click=conferma_responsabile)
 
     # Pulsanti per la gestione dell'inserimento di un nuovo strumento
-    # TODO
+    #to do
 
     # --- LAYOUT ---
     page.add(
