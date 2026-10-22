@@ -1,3 +1,5 @@
+from tkinter.constants import CENTER
+
 import flet as ft
 from alert import AlertManager
 from deposito_strumenti import DepositoStrumenti
@@ -69,7 +71,7 @@ def main(page: ft.Page):
     tipo = ft.TextField("Tipo")
     marca = ft.TextField("Marca" )
     anno = ft.TextField("Anno Acquisto")
-    counter =  ft.Text(value="0")
+    counter =  ft.TextField("0",  height=35,width=150, text_align=CENTER)
     riga = ft.Row([tipo, marca, anno,ft.IconButton(ft.Icons.REMOVE, bgcolor = "red", on_click=diminuisci),counter,ft.IconButton(ft.Icons.ADD, bgcolor = "green", on_click=aggiungi)], alignment=ft.MainAxisAlignment.CENTER)
     pulsante_aggiungi = ft.ElevatedButton("Aggiungi Strumento", on_click = new_strumento)
     riga2 = ft.Row([pulsante_aggiungi], alignment=ft.MainAxisAlignment.CENTER)
