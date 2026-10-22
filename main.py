@@ -46,14 +46,34 @@ def main(page: ft.Page):
         counter.value = str(int(counter.value) + 1)
         page.update()
 
+    def new_strumento(e):
+        if tipo.value.strip() != "" and marca.value.strip() != "" and anno.value.strip() != "" and int(counter.value) > 0:
+            deposito.aggiungi_strumento(
+                tipo = tipo.value,
+                marca = marca.value,
+                anno_acquisto = anno.value,
+                valore = int(counter.value),
+            )
+            tipo.value = ""
+            marca.value = ""
+            anno.value = ""
+            counter.value = "0"
+            aggiorna_lista_strumenti()
+            page.update()
+        else:
+            alert.show_alert("❌ Errore: inserisci valori numerici validi per anno e posti.")
+
+
+
 
     tipo = ft.TextField("Tipo")
     marca = ft.TextField("Marca" )
     anno = ft.TextField("Anno Acquisto")
     counter =  ft.Text(value="0")
-    riga = ft.Row([tipo, marca, anno,ft.IconButton(ft.Icons.REMOVE, on_click=diminuisci),counter,ft.IconButton(ft.Icons.ADD,on_click=aggiungi)], alignment=ft.MainAxisAlignment.CENTER)
-    page.controls.append(riga)
-    page.update()
+    riga = ft.Row([tipo, marca, anno,ft.IconButton(ft.Icons.REMOVE, bgcolor = "red", on_click=diminuisci),counter,ft.IconButton(ft.Icons.ADD, bgcolor = "green", on_click=aggiungi)], alignment=ft.MainAxisAlignment.CENTER)
+    pulsante_aggiungi = ft.ElevatedButton("Aggiungi Strumento", on_click = new_strumento)
+    riga2 = ft.Row([pulsante_aggiungi], alignment=ft.MainAxisAlignment.CENTER)
+
 
     # --- FUNZIONI APP ---
     def aggiorna_lista_strumenti():
@@ -73,9 +93,6 @@ def main(page: ft.Page):
         deposito.set_responsabile(input_responsabile.value)
         txt_responsabile.value = f"Responsabile: {deposito.get_responsabile()}"
         page.update()
-
-    # Handlers per la gestione dei pulsanti utili all'inserimento di un nuovo strumento
-    # TODO
 
     # --- EVENTI ---
     toggle_cambia_tema = ft.Switch(label="Tema scuro", value=True, on_change=cambia_tema)
@@ -100,7 +117,10 @@ def main(page: ft.Page):
                alignment=ft.MainAxisAlignment.CENTER),
 
         # Sezione 3
-        # TODO
+        ft.Divider(),
+        ft.Text("Aggiungi un nuovo strumento", size = 20),
+        riga,
+        riga2,
 
         # Sezione 4
         ft.Divider(),
